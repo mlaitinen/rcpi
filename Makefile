@@ -1,7 +1,7 @@
 CC=gcc # Compiler
 CFLAGS=-I. -Wall # Compiler flags
-OUTPUT=rc # Output file name
+OUTPUT=rcpi # Output file name
 LIBS=-lpthread -lpigpio -lrt # External libraries
 
-rcmake: joystick.c keyboard.c main.c
-	$(CC) -o $(OUTPUT) joystick.c keyboard.c main.c $(CFLAGS) $(LIBS)
+rcmake: joystick.c keyboard.c util.c main.c
+	$(CC) -o $(OUTPUT) joystick.c keyboard.c util.c main.c $(CFLAGS) $(LIBS)

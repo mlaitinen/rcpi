@@ -23,7 +23,7 @@ int read_inputevent_kb(struct inputdev_event *ev)
 		return res;
 	}
 
-	ev->target = INPUTDEV_ACCEL;
+	ev->target = INPUTDEV_TURN;
 	ev->magnitude = val;
 
 	return 1;

@@ -58,7 +58,7 @@ int read_inputevent_js(struct inputdev_event *ev)
 		return 0;
 	}
 
-	ev->magnitude = -(jse.value / 32.767);
+	ev->magnitude = -(jse.value / 32.767) / 1000.0;
 
 	return 1;
 }
@@ -67,42 +67,3 @@ void close_joystick()
 {
 	close(joystick_fd);
 }
-
-/*int get_joystick_status(struct wwvi_js_event *wjse)
-{
-	int rc;
-	struct js_event jse;
-	if (joystick_fd < 0)
-		return -1;
-
-	// memset(wjse, 0, sizeof(*wjse));
-	while ((rc = read_joystick_event(&jse) == 1)) {
-		jse.type &= ~JS_EVENT_INIT; // ignore synthetic events
-		if (jse.type == JS_EVENT_AXIS) {
-			switch (jse.number) {
-			case 0: wjse->stick1_x = jse.value;
-				break;
-			case 1: wjse->stick1_y = jse.value;
-				break;
-			case 2: wjse->stick2_x = jse.value;
-				break;
-			case 3: wjse->stick2_y = jse.value;
-				break;
-			default:
-				break;
-			}
-		} else if (jse.type == JS_EVENT_BUTTON) {
-			if (jse.number < 10) {
-				switch (jse.value) {
-				case 0:
-				case 1: wjse->button[jse.number] = jse.value;
-					break;
-				default:
-					break;
-				}
-			}
-		}
-	}
-	// printf("%d\n", wjse->stick1_y);
-	return 0;
-}*/
