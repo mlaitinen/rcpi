@@ -35,6 +35,12 @@ int open_udp()
 		return -1;
 	}
 
+	// Set the timeout to one second
+	struct timeval tv;
+	tv.tv_sec = 1;
+	tv.tv_usec = 0;
+	setsockopt(sd, SOL_SOCKET, SO_RCVTIMEO, (char *) &tv, sizeof(struct timeval));
+
 	syslog(LOG_INFO, "Listening for UDP packets. Port: %d.", PORT);
 
 	return 0;
@@ -42,7 +48,7 @@ int open_udp()
 
 int read_inputevent_udp(struct inputdev_event *ev)
 {
-	// Receive data from socket (blocking function call)
+	// Receive data from socket (blocking function call w/ timeout)
 	int recvlen = recv(sd, buffer, BUFFERSIZE, 0);
 
 	if (recvlen > 0)

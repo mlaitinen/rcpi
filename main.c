@@ -187,26 +187,12 @@ int main(int argc, char *argv[])
 		else
 		{
 			syslog(LOG_DEBUG, "Input: %d", rc);
+
+			// No proper input. Stop the motor and center the servo.
+			gpioServo(18, SERVO_CENTER);
+			gpioServo(23, SERVO_CENTER);
 		}
 
-		// Linear interpolation of acceleration
-/*		if (accel_source != accel_target)
-		{
-
-			printf("Source: %d, Target: %d, ", accel_source, accel_target);
-			int position = lerp(accel_source, accel_target, 0.99f);
-
-			printf("Accelerate: %d", position);
-			gpioServo(18, position);
-
-			if (abs(accel_source - accel_target) <= 10)
-			{
-				accel_source = accel_target;
-			} else
-			{
-				accel_source = position;
-			}
-		}*/
 	}
 	return 0;
 }
