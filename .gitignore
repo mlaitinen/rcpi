@@ -18,3 +18,4 @@
 *.app
 
 rcpi
+client.c

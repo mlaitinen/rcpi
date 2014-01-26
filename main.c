@@ -13,6 +13,7 @@
 #include "input.h"
 #include "joystick.h"
 #include "keyboard.h"
+#include "udp.h"
 #include "util.h"
 
 int (*open_input)(void);
@@ -76,11 +77,20 @@ int main(int argc, char *argv[])
 			start_ok = 1;
 			syslog(LOG_INFO, "Using joystick as the input device");
 		}
+		else if (strcmp(argv[1], "udp") == 0)
+		{
+			open_input = &open_udp;
+			close_input = &close_udp;
+			read_input = &read_inputevent_udp;
+
+			start_ok = 1;
+			syslog(LOG_INFO, "Using UDP socket as the input device");
+		}
 	}
 
 	if (start_ok != 1)
 	{
-		syslog(LOG_INFO, "Usage: %s [kb|js]", argv[0]);
+		syslog(LOG_INFO, "Usage: %s [kb|js|udp]", argv[0]);
 		exit(1);
 	}
 
